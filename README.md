@@ -390,7 +390,9 @@ Durante o desenvolvimento foram aplicados conceitos como:
 
 ## 🌐 Deploy
 
-O deploy da aplicação será disponibilizado posteriormente.
+A aplicação está disponível publicamente em:
+
+**Frontend:** https://task-manager-ten-lyart-75.vercel.app/
 
 ---
 
