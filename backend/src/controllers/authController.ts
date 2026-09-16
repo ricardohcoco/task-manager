@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import connection from "../database/connection.js";
 import type { RowDataPacket } from "mysql2";
 import jwt from "jsonwebtoken";
-import { env } from "../../config/env.js";
+import { env } from "../config/env.js";
 
 interface User extends RowDataPacket {
   id: number;
@@ -26,7 +26,7 @@ export async function login(req: Request, res: Response) {
 
     const [users] = await connection.query<User[]>(
       "SELECT * FROM users WHERE email = ?",
-      [normalizedEmail]
+      [normalizedEmail],
     );
 
     const user = users[0];
@@ -41,19 +41,19 @@ export async function login(req: Request, res: Response) {
 
     if (!passwordMatches) {
       return res.status(401).json({
-        message: "E-mail ou senha inválidos"
+        message: "E-mail ou senha inválidos",
       });
     }
 
     const token = jwt.sign(
-        {
-            id: user.id,
-            email: user.email
-        },
-        env.jwtSecret,
-        {
-            expiresIn: "8h"
-        }
+      {
+        id: user.id,
+        email: user.email,
+      },
+      env.jwtSecret,
+      {
+        expiresIn: "8h",
+      },
     );
 
     res.json({
@@ -65,7 +65,6 @@ export async function login(req: Request, res: Response) {
         email: user.email,
       },
     });
-
   } catch {
     res.status(500).json({
       message: "Erro interno do servidor",
