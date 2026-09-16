@@ -7,7 +7,11 @@ import cors from "cors";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: env.frontendUrl,
+  })
+);
 app.use(express.json());
 
 app.get("/", (req, res) => {
