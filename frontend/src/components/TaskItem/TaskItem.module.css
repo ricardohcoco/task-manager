@@ -1,0 +1,123 @@
+.card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.info {
+  flex: 1;
+}
+
+.title {
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.completedTitle {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.status {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.toggleButton,
+.deleteButton {
+  padding: 0.6rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.toggleButton {
+  background-color: #222;
+  color: white;
+}
+
+.toggleButton:hover {
+  background-color: #444;
+}
+
+.deleteButton {
+  background-color: #eee;
+  color: #b71c1c;
+}
+
+.deleteButton:hover {
+  background-color: #ddd;
+}
+
+.editInput {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #aaa;
+  border-radius: 6px;
+}
+
+.editInput:focus {
+  outline: none;
+  border-color: #333;
+}
+
+.editButton,
+.saveButton,
+.cancelButton {
+  padding: 0.6rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.editButton {
+  background-color: #eee;
+}
+
+.editButton:hover {
+  background-color: #ddd;
+}
+
+.saveButton {
+  background-color: #222;
+  color: white;
+}
+
+.saveButton:hover {
+  background-color: #444;
+}
+
+.cancelButton {
+  background-color: #eee;
+}
+
+.cancelButton:hover {
+  background-color: #ddd;
+}
+
+@media (max-width: 600px) {
+  .card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions {
+    width: 100%;
+  }
+
+  .actions button {
+    flex: 1;
+  }
+}

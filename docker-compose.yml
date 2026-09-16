@@ -1,0 +1,15 @@
+services:
+  database:
+    image: mysql:8.0
+    container_name: task-manager-db
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: task_manager
+    volumes:
+      - task_manager_data:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  task_manager_data:

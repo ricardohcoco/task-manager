@@ -1,0 +1,104 @@
+import { useState } from "react";
+import { register } from "../../services/api";
+import styles from "./Register.module.css";
+
+type RegisterProps = {
+  onGoToLogin: () => void;
+};
+
+export default function Register({ onGoToLogin }: RegisterProps) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(event: React.SyntheticEvent<HTMLFormElement, SubmitEvent>) {
+    event.preventDefault();
+
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setError("Preencha todos os campos");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("A senha deve ter pelo menos 6 caracteres");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+      await register(name.trim(), email.trim(), password);
+
+      setError("");
+      onGoToLogin();
+    } catch (error) {
+      if (error instanceof Error && error.message === "EMAIL_ALREADY_EXISTS") {
+        setError("Este e-mail já está cadastrado");
+        return;
+      }
+      setError("Erro ao criar conta");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <main className={styles.container}>
+      <section className={styles.card}>
+        <h1 className={styles.title}>Criar Conta</h1>
+
+        <p className={styles.subtitle}>
+          Cadastre-se para organizar suas tarefas
+        </p>
+
+        <form className={styles.form} onSubmit={handleSubmit}>
+          <input
+            className={styles.input}
+            type="text"
+            placeholder="Nome"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+            required
+          />
+
+          <input
+            className={styles.input}
+            type="email"
+            placeholder="E-mail"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
+
+          <input
+            className={styles.input}
+            type="password"
+            placeholder="Senha"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+
+          <button
+            className={styles.submitButton}
+            type="submit"
+            disabled={loading}
+          >
+            {loading ? "Criando..." : "Criar conta"}
+          </button>
+        </form>
+
+        {error && <p className={styles.error}>{error}</p>}
+        <div className={styles.switch}>
+          <span>Já possui uma conta? </span>
+
+          <button className={styles.linkButton} onClick={onGoToLogin}>
+            Entrar
+          </button>
+        </div>
+      </section>
+    </main>
+  );
+}
